@@ -30,19 +30,6 @@ export default class DaysDifference {
   }
 
   // Adjust number of days in case dates that are not the 1st of month.
-  adjustDaysInMonths (daysInMonthsArray) {
-
-    let daysFromStartMonth = this.getRemainingDaysFromStartMonth(this.startDate.day, this.startDate.month, this.startDate.year);
-    let daysFromEndMonth = this.getRemainingDaysFromEndMonth(this.endDate.day, this.endDate.month, this.endDate.year);
-
-    daysInMonthsArray[this.startDate.month - 1] = daysFromStartMonth;
-    daysInMonthsArray[this.endDate.month - 1] = daysFromEndMonth;
-
-    return daysInMonthsArray;
-
-  }
-
-  // Adjust number of days in case dates that are not the 1st of month.
   adjustDaysMonths (daysInMonthsArray, year, month, day, startOrEnd = 'start') {
 
     let daysMonth = [];
@@ -101,35 +88,5 @@ export default class DaysDifference {
 
   }
 
-  get daysfromSameYearOLD () {
-    if (this.startDate.year == this.endDate.year && this.startDate.month == this.endDate.month) {
-      // Will return just one index if same month in same start and end year.
-      return (this.endDate.day - this.startDate.day) + 1;
-    }
-    let months = this.daysInMonth(this.startDate.year);
-    let remainingMonths;
-
-    // There could be dates from middle of month.
-    let daysInMonthsAdjustedForStart = this.adjustDaysMonths(months, this.startDate.year, this.startDate.month, this.startDate.day, 'start');
-    console.log('daysInMonthsAdjustedForStart:', daysInMonthsAdjustedForStart);
-    // Adjust days for the end date if any middle dates.
-    let daysInMonthsAdjustedForEnd = this.adjustDaysMonths(months, this.endDate.year, this.endDate.month, this.endDate.day, 'end');
-
-    if (this.startDate.month == 1 && this.endDate.month == 12 || this.startDate.month > 1 && this.endDate.month == 12) {
-      remainingMonths = daysInMonthsAdjusted.slice(this.startDate.month - 1);
-    }
-
-    if (this.startDate.month > 1 && this.endDate.month < 12) {
-      remainingMonths = daysInMonthsAdjusted.slice(this.startDate.month - 1, this.endDate.month);
-    }
-
-    console.log(remainingMonths);
-
-    return remainingMonths.reduce((prev, curr) => prev + curr);
-  }
-
-  get daysFromStartDate () {
-    let totalMonths = (this.totalMonths - this.startDate.month) + 1;
-  }
 
 }
