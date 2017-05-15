@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --inline --hot",
     "build": "webpack -p",
     "test": "mocha-webpack --webpack-config webpack-test.config.js \"src/**/*.test.js\"",
-    "test:watch": "mocha-webpack --webpack-config  webpack-test.config.js --watch test"
+    "test:watch": "mocha-webpack --webpack-config  webpack-test.config.js --watch \"src/**/*.test.js\""
   },
   "author": "",
   "license": "ISC",
