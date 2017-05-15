@@ -3,7 +3,6 @@ export default class DaysDifference {
   constructor (startDate, endDate) {
     this.startDate = startDate;
     this.endDate = endDate;
-    this.totalMonths = 12;
   }
 
   daysInMonth (year) {
@@ -11,6 +10,7 @@ export default class DaysDifference {
     const daysinMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     // Check if leap year.
     if (year % 4 == 0) {
+      // 2nd index (Feb) has 29 days.
       daysinMonths[1] = 29;
       return daysinMonths;
     }
@@ -64,6 +64,45 @@ export default class DaysDifference {
     return months.slice(0, this.endDate.month);
   }
 
+  _flattenArray (arr) {
+    return arr.reduce(
+      (acc, val) => acc.concat(
+        Array.isArray(val) ? this._flattenArray(val) : val
+      ),
+      []
+    );
+  }
+
+  // Get all days from years between start and end year, but not including start and end year.
+  allDaysBetweenYears () {
+    let years = [];
+    for (let year = this.startDate.year + 1; year < this.endDate.year; year++) {
+      years.push(this.daysInMonth(year));
+    }
+    let allMonths = this._flattenArray(years);
+    let totalDays = allMonths.reduce((prev, curr) => prev + curr);
+    return totalDays;
+  }
+
+  // Days difference not from the same year.
+  get daysDifferenceOverYears () {
+    // Total days from Start year.
+    let daysInMonthsFromStart = this.monthsStartDate().reduce((prev, curr) => prev + curr);
+    // Total days from End year.
+    let daysInMonthsFromEnd = this.monthsEndDate().reduce((prev, curr) => prev + curr);
+    let yearsDiff = this.endDate.year - this.startDate.year;
+
+    if (yearsDiff === 1) {
+      // Return total days.
+      return daysInMonthsFromStart + daysInMonthsFromEnd;
+    }
+
+    if (yearsDiff > 1) {
+      let totalDays = daysInMonthsFromStart + this.allDaysBetweenYears() + daysInMonthsFromEnd;
+      return totalDays;
+    }
+  }
+
   get daysfromSameYear () {
     let remainingMonths;
     if (this.startDate.year == this.endDate.year && this.startDate.month == this.endDate.month) {
@@ -74,7 +113,7 @@ export default class DaysDifference {
     let daysInMonthsForStart = this.monthsStartDate();
     let daysInMonthsForEnd = this.monthsEndDate();
 
-    // We already have sliced from start month.
+    // We already have sliced in monthsStartDate() from start month.
     remainingMonths = daysInMonthsForStart.slice(0, (this.endDate.month - this.startDate.month) + 1);
     // Take the last month out which will be replaced with the last index of daysInMonthsForEnd.
     remainingMonths.pop();
@@ -82,11 +121,7 @@ export default class DaysDifference {
     // the last element form daysInMonthsForEnd is the actual calculated days for the end date month.
     remainingMonths.push(daysInMonthsForEnd[daysInMonthsForEnd.length - 1]);
 
-    console.log('remainingMonths:', remainingMonths);
-
     return remainingMonths.reduce((prev, curr) => prev + curr);
-
   }
-
 
 }
