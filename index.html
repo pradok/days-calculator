@@ -12,6 +12,21 @@
     <h1>Days Calculator</h1>
 </header>
 <div class="content">
+    <div class="form">
+        <div>
+            <label>Start Date:</label>
+            <input type="date" id="startDate" value=""/>
+        </div>
+        <div>
+            <label>End Date:</label>
+            <input type="date" id="endDate" value=""/>
+        </div>
+        <div>
+            <label htmlFor="calcBtn"></label>
+            <button id="btnCalculateDays">Calculate Days</button>
+        </div>
+    </div>
+    <h2>Number of days (inclusive of start and end date): <span id="days" class="currency"></span></h2>
 </div>
 <script src="build/main.bundle.js"></script>
 </body>

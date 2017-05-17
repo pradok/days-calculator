@@ -1,8 +1,23 @@
 export default class DaysDifference {
-
+  /**
+   *
+   * @param startDate
+   * @param endDate
+   *
+   * Both as objects, eg. {year: 2017, month: 04, day: 12}
+   */
   constructor (startDate, endDate) {
     this.startDate = startDate;
     this.endDate = endDate;
+  }
+
+  get calculateDays() {
+    if(this.startDate.year == this.endDate.year) {
+      return this.daysfromSameYear;
+    }
+    else {
+      return this.daysDifferenceOverYears;
+    }
   }
 
   daysInMonth (year) {
