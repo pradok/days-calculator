@@ -28,3 +28,4 @@ Assumptions
    dd-mm-yyyy
 
 * Recommended to use Edge or Chrome for optimal user experience using built in date widget.
+* Due to time constraints, taken the liberty of using Date class for basic date validation.
