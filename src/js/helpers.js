@@ -12,4 +12,13 @@ function splitStringToArray(str) {
   return str.split(new RegExp(separators.join('|'), 'g'));
 }
 
-export { checkValidDateRange, splitStringToArray};
+function _flattenArray (arr) {
+  return arr.reduce(
+    (acc, val) => acc.concat(
+      Array.isArray(val) ? _flattenArray(val) : val
+    ),
+    []
+  );
+}
+
+export { checkValidDateRange, splitStringToArray, _flattenArray};

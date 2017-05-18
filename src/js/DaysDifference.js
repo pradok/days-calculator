@@ -1,18 +1,21 @@
+import { splitStringToArray, _flattenArray } from './helpers';
+
 export default class DaysDifference {
-  /**
-   *
-   * @param startDate
-   * @param endDate
-   *
-   * Both as objects, eg. {year: 2017, month: 04, day: 12}
-   */
+
   constructor (startDate, endDate) {
-    this.startDate = startDate;
-    this.endDate = endDate;
+    const startDateArr = splitStringToArray(startDate);
+    const endDateArr = splitStringToArray(endDate);
+
+    this.startDate = {
+      year: parseInt(startDateArr[0]),
+      month: parseInt(startDateArr[1]),
+      day: parseInt(startDateArr[2])
+    };
+    this.endDate = {year: parseInt(endDateArr[0]), month: parseInt(endDateArr[1]), day: parseInt(endDateArr[2])};
   }
 
-  get calculateDays() {
-    if(this.startDate.year == this.endDate.year) {
+  get calculateDays () {
+    if (this.startDate.year == this.endDate.year) {
       return this.daysfromSameYear;
     }
     else {
@@ -46,7 +49,6 @@ export default class DaysDifference {
 
   // Adjust number of days in case dates that are not the 1st of month.
   adjustDaysMonths (daysInMonthsArray, year, month, day, startOrEnd = 'start') {
-
     let daysMonth = [];
 
     if (startOrEnd === 'start') {
@@ -58,7 +60,6 @@ export default class DaysDifference {
     daysInMonthsArray[month - 1] = daysMonth;
 
     return daysInMonthsArray;
-
   }
 
   // Months array with each element as no of days.
@@ -79,23 +80,15 @@ export default class DaysDifference {
     return months.slice(0, this.endDate.month);
   }
 
-  _flattenArray (arr) {
-    return arr.reduce(
-      (acc, val) => acc.concat(
-        Array.isArray(val) ? this._flattenArray(val) : val
-      ),
-      []
-    );
-  }
-
   // Get all days from years between start and end year, but not including start and end year.
   allDaysBetweenYears () {
     let years = [];
     for (let year = this.startDate.year + 1; year < this.endDate.year; year++) {
       years.push(this.daysInMonth(year));
     }
-    let allMonths = this._flattenArray(years);
+    let allMonths = _flattenArray(years);
     let totalDays = allMonths.reduce((prev, curr) => prev + curr);
+
     return totalDays;
   }
 
