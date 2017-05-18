@@ -1,8 +1,18 @@
 // Check if dateEnd is not before dateStart
 function checkValidDateRange(startDate, endDate) {
-  if(Date.parse(endDate) < Date.parse(startDate)) {
-    return false;
+  const reg = /^[0-9.\/-]+$/;
+  // Allow only if string contains / or -
+  if(!reg.test(startDate)) {
+    return 'Please provide Start Date in dd-mm-yyyy or dd/mm/yyyy format';
   }
+  if(!reg.test(endDate)) {
+    return 'Please provide End Date in dd-mm-yyyy or dd/mm/yyyy format';
+  }
+
+  if(Date.parse(endDate) < Date.parse(startDate)) {
+    return 'Date End should be after Date Start';
+  }
+
   return true;
 }
 

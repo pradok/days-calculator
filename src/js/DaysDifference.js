@@ -6,6 +6,16 @@ export default class DaysDifference {
     const startDateArr = splitStringToArray(startDate);
     const endDateArr = splitStringToArray(endDate);
 
+    // Since date type field provides in yyyy-mm-dd format.
+    // If date was provided in dd/mm/yyyy or dd-mm-yyyy format.
+    // Flip the array.
+    if(startDate.indexOf('/') === 2 || startDate.indexOf('-') === 2) {
+      startDateArr.reverse();
+    }
+    if(endDate.indexOf('/') === 2 || endDate.indexOf('-') === 2) {
+      endDateArr.reverse();
+    }
+
     this.startDate = {
       year: parseInt(startDateArr[0]),
       month: parseInt(startDateArr[1]),

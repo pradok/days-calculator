@@ -10,15 +10,15 @@ const callback = function () {
   document.getElementById('btnCalculateDays').addEventListener('click', () => {
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;
+    const validDate = checkValidDateRange(startDate, endDate);
 
-    if (checkValidDateRange(startDate, endDate)) {
-
+    if (startDate && endDate && validDate) {
       const calcDays = new DaysDifference(startDate, endDate);
-
-      document.getElementById("days").innerHTML = calcDays.calculateDays;
+      document.getElementById('days').innerHTML = calcDays.calculateDays;
     }
-    else {
-      alert('Date End should be after Date Start');
+
+    if (validDate !== true) {
+      alert(validDate);
     }
 
   });
