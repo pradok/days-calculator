@@ -20,7 +20,7 @@ Run test
 Assumptions
 -----------
 
-* Basic validation of form fields using Date for browsers that don't support date type input.
+* Custom date validation of form fields for browsers that don't support date type input.
 * User is expected to provide date in one of these formats, if using browser with no date type input support:
    yyyy-mm-dd
    yyyy/mm/dd
@@ -28,4 +28,3 @@ Assumptions
    dd-mm-yyyy
 
 * Recommended to use Edge or Chrome for optimal user experience using built in date widget.
-* Due to time constraints, taken the liberty of using Date class for basic date validation.
