@@ -1,27 +1,19 @@
-import { splitStringToArray, _flattenArray } from './helpers';
+import { cleanDateFormat, flattenArray } from './helpers';
 
 export default class DaysDifference {
 
   constructor (startDate, endDate) {
-    const startDateArr = splitStringToArray(startDate);
-    const endDateArr = splitStringToArray(endDate);
-
-    // Since date type field provides in yyyy-mm-dd format.
-    // If date was provided in dd/mm/yyyy or dd-mm-yyyy format.
-    // Flip the array.
-    if(startDate.indexOf('/') === 2 || startDate.indexOf('-') === 2) {
-      startDateArr.reverse();
-    }
-    if(endDate.indexOf('/') === 2 || endDate.indexOf('-') === 2) {
-      endDateArr.reverse();
-    }
-
+    const {year, month, day} = cleanDateFormat(startDate);
     this.startDate = {
-      year: parseInt(startDateArr[0]),
-      month: parseInt(startDateArr[1]),
-      day: parseInt(startDateArr[2])
+      year,
+      month,
+      day
     };
-    this.endDate = {year: parseInt(endDateArr[0]), month: parseInt(endDateArr[1]), day: parseInt(endDateArr[2])};
+    const end = cleanDateFormat(endDate);
+    this.endDate = {
+      year: end.year,
+      month: end.month,
+      day: end.day};
   }
 
   get calculateDays () {
@@ -96,7 +88,7 @@ export default class DaysDifference {
     for (let year = this.startDate.year + 1; year < this.endDate.year; year++) {
       years.push(this.daysInMonth(year));
     }
-    let allMonths = _flattenArray(years);
+    let allMonths = flattenArray(years);
     let totalDays = allMonths.reduce((prev, curr) => prev + curr);
 
     return totalDays;

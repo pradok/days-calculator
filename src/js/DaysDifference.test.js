@@ -1,5 +1,4 @@
 var expect = require('chai').expect;
-var assert = require('chai').assert;
 
 var DaysDifference = require('./DaysDifference').default;
 
